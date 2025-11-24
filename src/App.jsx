@@ -2,7 +2,8 @@ import React from "react"
 import SidebarApp from "./component/sidebar/SidebarApp"
 import Navbar from "./component/navbar/NavbarApp"
 import Brand from "./component/sidebar/Brand"
-import UsersApp from "./component/Users/UsersApp"
+import UsersMain from "./component/Users/UsersMain"
+import MainTenggat from "./component/tenggat_waktu/MainTenggat"
 import { getData } from "./component/sidebar/dataNavigation"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -17,7 +18,8 @@ function App() {
 
   const datas = getData();
   const pagesMap = {
-    "Users": <UsersApp />,
+    "Users": <UsersMain />,
+    "Tenggat Waktu": <MainTenggat />
   }
 
   return (
