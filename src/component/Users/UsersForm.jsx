@@ -11,12 +11,14 @@ function UsersForm({setIsOpenModal}) {
         status : false,
     });
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async() => {
         await fetch("http://127.0.0.1:3000/users", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(newUser)
         })
+
+        console.log(body)
 
         setIsOpenModal(false)
     }
