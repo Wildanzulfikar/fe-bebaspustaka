@@ -38,9 +38,9 @@ function App() {
                 <Brand />
                 <SidebarApp />
               </div>
-              <div className="flex flex-col min-h-full w-full">
+              <div className="flex flex-col w-full">
                 <Navbar />
-                <div className="">
+                <div className="flex bg-white h-full">
                   <Routes>
                     {datas.map((data) => {
                       const path = `/${data.teks.toLowerCase().replace(/ /g, "-")}`;

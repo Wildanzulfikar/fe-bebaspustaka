@@ -38,13 +38,13 @@ function AddTenggatWaktu() {
             <div>
                 <form onSubmit={handleSubmit} className="mb-4">
                     <div className="flex gap-4">
-                        <div className="flex flex-col">
+                        <div className="flex flex-col gap-2">
                             <label htmlFor="start-date">Start</label>
-                            <input value={newTenggat.waktu_mulai} onChange={(e) => setTenggat({...newTenggat, waktu_mulai: e.target.value})} className="border border-y-zinc-400 rounded-xs" id="start-date" type="date" />
+                            <input value={newTenggat.waktu_mulai} onChange={(e) => setTenggat({...newTenggat, waktu_mulai: e.target.value})} className="border border-fuchsia-600 rounded-xs py-1 px-2" id="start-date" type="date" />
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col gap-2">
                             <label htmlFor="end-date">End</label>
-                            <input value={newTenggat.waktu_akhir} onChange={(e) => setTenggat({...newTenggat, waktu_akhir: e.target.value})} className="border border-y-zinc-400 rounded-xs" id="end-date" type="date" />
+                            <input value={newTenggat.waktu_akhir} onChange={(e) => setTenggat({...newTenggat, waktu_akhir: e.target.value})} className="border border-fuchsia-600 rounded-xs py-1 px-2" id="end-date" type="date" />
                         </div>
                     </div>
                     <button className="flex items-center mt-4 py-1 px-4 text-white rounded-xs bg-blue-500">Tambah Jadwal</button>

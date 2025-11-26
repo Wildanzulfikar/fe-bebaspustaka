@@ -1,32 +1,33 @@
 import { useEffect, useState } from "react"
 
-const handleDelete = async(id) => {
-    await fetch(`http://127.0.0.1:3000/tenggat/${id}`, {
-        method: "DELETE"
-    })
-
-    getTenggat()
-}
-
 function ListTenggatWaktu() {
     const [tenggat, setTenggat] = useState([])
-
+    
     const getTenggat = async() => {
         const res = await fetch("http://127.0.0.1:3000/tenggat")
         const data = await res.json()
-
+        
         setTenggat(data)
     }
 
     useEffect(() => {
-        getTenggat()
+        getTenggat();
     }, [])
 
+    const handleDelete = async(id) => {
+        await fetch(`http://127.0.0.1:3000/tenggat/${id}`, {
+            method: "DELETE"
+        })
+    
+        getTenggat()
+    }
+    
+
     return (
-        <div className="flex bg-white h-full ml-2 rounded-md mt-2 drop-shadow-xl">
+        <div className="flex bg-white h-full rounded-md mt-2 drop-shadow-xl">
             <table className="table-fixed h-full w-full">
                 <thead>
-                    <tr className="bg-[#008797] text-white">
+                    <tr className="bg-[#008797] text-white font-bold">
                         <th className="w-1/12 px-4 py-2  text-center">ID</th>
                         <th className="w-1/12 px-4 py-2  text-center">Username</th>
                         <th className="w-1/12 px-4 py-2  text-center">Nama Lengkap</th>

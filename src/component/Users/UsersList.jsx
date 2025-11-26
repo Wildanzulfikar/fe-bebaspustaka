@@ -25,7 +25,7 @@ function UsersList({setIsOpenModal}) {
   }, []);
 
   return (
-    <div className="bg-white overflow-x-auto h-full ml-2 rounded-md mt-2 drop-shadow-xl">
+    <div className="bg-white h-full ml-2 rounded-md mt-2 drop-shadow-xl">
         <div className="flex gap-2 px-8 py-8">
             <h2 className="font-bold text-xl mb-2 text-[#4B4B4B]">Data Users</h2>
             <img className="h-6 mt-1" src="/users/people-users.png" alt="" />
