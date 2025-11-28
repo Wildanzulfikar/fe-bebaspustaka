@@ -1,20 +1,15 @@
-import { useEffect, useState } from "react"
+import { useEffect} from "react"
 
-function ListTenggatWaktu() {
-    const [tenggat, setTenggat] = useState([])
-    
-    const getTenggat = async() => {
-        const res = await fetch("http://127.0.0.1:3000/tenggat")
-        const data = await res.json()
-        
-        setTenggat(data)
-    }
+function ListTenggatWaktu({tenggat, getTenggat}) {
 
     useEffect(() => {
         getTenggat();
     }, [])
 
     const handleDelete = async(id) => {
+
+        if(!confirm("yakin mau hapus?")) return;
+
         await fetch(`http://127.0.0.1:3000/tenggat/${id}`, {
             method: "DELETE"
         })

@@ -4,6 +4,7 @@ import Navbar from "./component/navbar/NavbarApp"
 import Brand from "./component/sidebar/Brand"
 import UsersMain from "./component/Users/UsersMain"
 import MainTenggat from "./component/tenggat_waktu/MainTenggat"
+import MainLoan from "./component/loan/MainLoan"
 import { getData } from "./component/sidebar/dataNavigation";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login, Register } from "./component/Auth";
@@ -20,7 +21,8 @@ function App() {
   const datas = getData();
   const pagesMap = {
     "Users": <UsersMain />,
-    "Tenggat Waktu": <MainTenggat />
+    "Tenggat Waktu": <MainTenggat />,
+    "Data Loan": <MainLoan />
   }
 
   return (

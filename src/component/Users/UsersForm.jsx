@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function UsersForm({setIsOpenModal}) {
+function UsersForm({setIsOpenModal, getUsers}) {
 
     const [newUser, setNewUser] = useState({
         username : "",
@@ -19,7 +19,7 @@ function UsersForm({setIsOpenModal}) {
             body: JSON.stringify(newUser)
         })
 
-        console.log(newUser)
+        getUsers()
 
         setIsOpenModal(false)
     }

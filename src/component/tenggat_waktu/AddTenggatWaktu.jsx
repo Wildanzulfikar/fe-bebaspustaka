@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
+import {useState } from "react"
 
-function AddTenggatWaktu() {
+function AddTenggatWaktu({getTenggat}) {
 
     const[newTenggat, setTenggat] = useState({
         waktu_mulai : "",
@@ -10,9 +10,6 @@ function AddTenggatWaktu() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem("token");
-        console.log("Token:", token);
-        console.log("Data dikirim:", newTenggat);
-        console.log("Token:", localStorage.getItem("token"));
 
         const res = await fetch("http://127.0.0.1:3000/tenggat", {
             method: "POST",
@@ -25,6 +22,8 @@ function AddTenggatWaktu() {
 
         const data = await res.json();
         console.log("Response:", data);
+        
+        getTenggat()
 
         setTenggat({ waktu_mulai: "", waktu_akhir: "" });
     }
