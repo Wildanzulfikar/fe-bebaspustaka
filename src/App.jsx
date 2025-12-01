@@ -5,6 +5,7 @@ import Brand from "./component/sidebar/Brand"
 import UsersMain from "./component/Users/UsersMain"
 import MainTenggat from "./component/tenggat_waktu/MainTenggat"
 import Loan from "./component/loan/Loan"
+import MainAnalitic from "./component/analitic/MainAnalitic"
 import { getData } from "./component/sidebar/dataNavigation"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -21,7 +22,8 @@ function App() {
   const pagesMap = {
     "Users": <UsersMain />,
     "Tenggat Waktu": <MainTenggat />,
-    "Data Loan" : <Loan />
+    "Data Loan" : <Loan />,
+    "Analitycs": <MainAnalitic />
   }
 
   return (

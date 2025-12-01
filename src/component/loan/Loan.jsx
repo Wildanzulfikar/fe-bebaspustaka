@@ -48,11 +48,6 @@ function Loan() {
                             <td className="px-4 py-2  text-center">{loan.semester}</td>
                             <td className="px-4 py-2  text-center">{loan.status}</td>
                             <td className="px-4 py-2  text-center">{loan.tenggat_waktu}</td>
-
-                            <td className="flex justify-center items-center gap-3 px-4 py-2  text-center">
-                                <img onClick={() => handleDelete(t.id_tenggat_waktu)} src="/tenggat/delete.png" alt="delete"/> |
-                                <img src="/tenggat/update.png" alt="update"/>
-                            </td>
                         </tr>
                     ))}
                 </tbody>
