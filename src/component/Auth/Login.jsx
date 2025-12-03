@@ -69,9 +69,6 @@ const Login = () => {
               <label className="block mb-1 font-medium text-lg">Password</label>
               <input type="password" name="password" value={form.password} onChange={handleChange} required className="w-full border border-gray-300 rounded px-3 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transition" />
             </div>
-            <div className="mb-4 text-left">
-              <a href="#" className="text-base text-blue-700 hover:underline">Lupa Password?</a>
-            </div>
             <div className="flex items-center mb-6 w-full justify-center">
               <ReCAPTCHA
                 ref={recaptchaRef}
