@@ -1,50 +1,78 @@
-import React from "react"
+import React from "react";
+import { 
+    BarChart as ReBarChart, 
+    Bar, 
+    XAxis, 
+    YAxis, 
+    Tooltip, 
+    CartesianGrid, 
+    ResponsiveContainer,
+    Cell
+} from "recharts";
 
 function BarChart() {
-    const data = [
-        { label: "Teknik Informatika\ndan Komputer", value: 4300, color: "bg-blue-600" },
-        { label: "Teknik Elektro", value: 4700, color: "bg-pink-500" },
-        { label: "Teknik Grafika\nPenerbitan", value: 2300, color: "bg-red-500" },
-        { label: "Teknik Mesin", value: 4800, color: "bg-lime-500" },
-        { label: "Asuransi", value: 9700, color: "bg-green-300" }
-    ]
 
-    const maxValue = 10000
+    const data = [
+        { jurusan: "Teknik Sipil", total: 8200 },
+        { jurusan: "Teknik Mesin", total: 6100 },
+        { jurusan: "Teknik Elektro", total: 7200 },
+        { jurusan: "Teknik Grafika & Penerbitan", total: 5300 },
+        { jurusan: "Teknik Informatika & Komputer", total: 9800 },
+        { jurusan: "Akuntansi", total: 4500 },
+        { jurusan: "Administrasi Niaga", total: 3900 },
+    ];
+
+    const COLORS = [
+        "#4F46E5",
+        "#FF8042",
+        "#00C49F",
+        "#4D96FF",
+        "#FFBB28",
+        "#8A2BE2",
+        "#00C4FF"
+    ];
 
     return (
-        <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="font-bold text-lg mb-6">Bebas Kompen</h2>
-            
-            <div className="flex items-end justify-between h-64 gap-2">
-                {data.map((item, index) => (
-                    <div key={index} className="flex flex-col items-center gap-2 flex-1">
-                        <div className="w-full bg-gray-200 rounded-t relative h-full flex items-end justify-center overflow-hidden">
-                            <div
-                                className={`${item.color} w-full rounded-t transition-all`}
-                                style={{ height: `${(item.value / maxValue) * 100}%` }}
-                            >
-                                <span className="text-white text-xs font-bold flex items-center justify-center h-full">
-                                    {item.value}
-                                </span>
-                            </div>
-                        </div>
-                        <label className="text-xs text-center text-gray-600 font-medium leading-tight">
-                            {item.label}
-                        </label>
-                    </div>
-                ))}
-            </div>
+        <div className="bg-white rounded-lg p-6">
+            <h2 className="font-bold text-lg mb-4">Bebas Kompen</h2>
 
-            {/* Y-axis labels */}
-            <div className="flex justify-between text-xs text-gray-500 mt-4 pl-2">
-                <span>0</span>
-                <span>2.5k</span>
-                <span>5.0k</span>
-                <span>7.5k</span>
-                <span>10.0k</span>
+            <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+                <div className="min-w-[950px] h-[360px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <ReBarChart data={data}>
+                            <CartesianGrid strokeDasharray="3 3" />
+
+                            <XAxis 
+                                dataKey="jurusan" 
+                                tick={{ fontSize: 12 }}
+                                interval={0}
+                            />
+
+                            <YAxis 
+                                domain={[0, 10000]}
+                                ticks={[0, 2000, 4000, 6000, 8000, 10000]}
+                            />
+
+                            <Tooltip />
+
+                            <Bar 
+                                dataKey="total" 
+                                radius={[6, 6, 0, 0]}
+                            >
+                                {data.map((entry, index) => (
+                                    <Cell 
+                                        key={index} 
+                                        fill={COLORS[index % COLORS.length]} 
+                                    />
+                                ))}
+                            </Bar>
+
+                        </ReBarChart>
+                    </ResponsiveContainer>
+                </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default BarChart
+export default BarChart;

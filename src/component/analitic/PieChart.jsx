@@ -1,81 +1,98 @@
-import React from "react"
+import React from "react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+  Tooltip,
+} from "recharts";
 
-function PieChart() {
-    const data = [
-        { label: "Teknik Informatika dan Komputer", value: 40, color: "bg-blue-500" },
-        { label: "Teknik Elektro", value: 28, color: "bg-orange-400" },
-        { label: "Teknik Grafika Penerbitan", value: 15, color: "bg-cyan-400" },
-        { label: "Teknik Mesin", value: 12, color: "bg-green-400" },
-        { label: "Akuntansi", value: 5, color: "bg-purple-500" }
-    ]
+function PieChartComponent() {
+  const data = [
+    { name: "Teknik Sipil", value: 40 },
+    { name: "Teknik Mesin", value: 32 },
+    { name: "Teknik Elektro", value: 80 },
+    { name: "Akuntansi", value: 88 },
+    { name: "Administrasi Niaga", value: 54 },
+    { name: "Teknik Grafika Penerbitan (TGP)", value: 64 },
+    { name: "Teknik Informatika dan Komputer (TIK)", value: 40 },
+  ];
 
-    // Simple SVG pie chart
-    let currentAngle = -90
-    const slices = data.map((item) => {
-        const sliceAngle = (item.value / 100) * 360
-        const startAngle = currentAngle
-        const endAngle = currentAngle + sliceAngle
-        
-        const startRad = (startAngle * Math.PI) / 180
-        const endRad = (endAngle * Math.PI) / 180
-        
-        const x1 = 50 + 50 * Math.cos(startRad)
-        const y1 = 50 + 50 * Math.sin(startRad)
-        const x2 = 50 + 50 * Math.cos(endRad)
-        const y2 = 50 + 50 * Math.sin(endRad)
-        
-        const largeArc = sliceAngle > 180 ? 1 : 0
-        
-        const path = `M 50 50 L ${x1} ${y1} A 50 50 0 ${largeArc} 1 ${x2} ${y2} Z`
-        
-        currentAngle = endAngle
-        
-        return { path, color: item.color, value: item.value }
-    })
+  const COLORS = [
+    "#8884D8",
+    "#FF8042",
+    "#4D96FF",
+    "#FFBB28",
+    "#00C4FF",
+    "#00C49F",
+    "#0088FE",
+  ];
 
-    const colors = [
-        "#3B82F6", // blue
-        "#FB923C", // orange
-        "#22D3EE", // cyan
-        "#22C55E", // green
-        "#A855F7"  // purple
-    ]
+  const renderLabelInside = ({ cx, cy, midAngle, outerRadius, percent }) => {
+    const RADIAN = Math.PI / 180;
+    const radius = outerRadius * 0.65;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-        <div className="bg-white rounded-lg shadow-md p-6 h-full">
-            <h2 className="font-bold text-lg mb-6">Data Persenan Bebas Kompen</h2>
-            
-            <div className="flex items-center justify-between h-full">
-                {/* Pie Chart SVG */}
-                <div className="w-40 h-40">
-                    <svg viewBox="0 0 100 100" className="w-full h-full">
-                        {slices.map((slice, index) => (
-                            <path
-                                key={index}
-                                d={slice.path}
-                                fill={colors[index]}
-                                stroke="white"
-                                strokeWidth="2"
-                            />
-                        ))}
-                    </svg>
-                </div>
+      <text
+        x={x}
+        y={y}
+        fill="#fff"
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontSize={13}
+        fontWeight="bold"
+      >
+        {(percent * 100).toFixed(0)}%
+      </text>
+    );
+  };
 
-                {/* Legend */}
-                <div className="flex-1 ml-4 space-y-1">
-                    {data.map((item, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                            <div
-                                className="w-3 h-3 rounded-full"
-                                style={{ backgroundColor: colors[index] }}
-                            ></div>
-                            <span className="text-xs text-gray-700">{item.label}</span>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
-    )
+  return (
+    <div className="flex flex-col w-full h-full bg-white rounded-lg shadow-md p-6">
+
+      {/* ======== TITLE FIXED ======== */}
+      <div className="flex justify-end pr-8 mb-4">
+        <h1 className="font-semibold text-xl text-gray-700">
+          Data Persenan Bebas Kompen
+        </h1>
+      </div>
+
+      {/* ======== PIE CHART ======== */}
+      <div className="h-[500px] w-full">
+        <ResponsiveContainer>
+          <PieChart>
+
+            <Pie
+              data={data}
+              cx="40%"
+              cy="50%"
+              outerRadius={130}
+              paddingAngle={0}
+              dataKey="value"
+              label={renderLabelInside}
+              labelLine={false}
+            >
+              {data.map((entry, index) => (
+                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+
+            <Tooltip />
+
+            <Legend
+              layout="vertical"
+              verticalAlign="middle"
+              align="right"
+              wrapperStyle={{ paddingLeft: 20 }}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
 }
 
-export default PieChart
+export default PieChartComponent;
