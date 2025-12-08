@@ -24,6 +24,11 @@ const getData = () => [
         image : "/tenggat/tenggat.png",
         teks : "Tenggat Waktu"
     },
+    {
+        id : 6,
+        image : "/navigasi/pengunjung.png",
+        teks : "Pengunjung"
+    },
 ]
 
 export {getData}

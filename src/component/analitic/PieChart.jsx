@@ -15,8 +15,8 @@ function PieChartComponent() {
     { name: "Teknik Elektro", value: 80 },
     { name: "Akuntansi", value: 88 },
     { name: "Administrasi Niaga", value: 54 },
-    { name: "Teknik Grafika Penerbitan (TGP)", value: 64 },
-    { name: "Teknik Informatika dan Komputer (TIK)", value: 40 },
+    { name: "Teknik Grafika Penerbitan", value: 64 },
+    { name: "Teknik Informatika dan Komputer", value: 40 },
   ];
 
   const COLORS = [

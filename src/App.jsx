@@ -6,6 +6,7 @@ import UsersMain from "./component/Users/UsersMain"
 import MainTenggat from "./component/tenggat_waktu/MainTenggat"
 import Loan from "./component/loan/Loan"
 import MainAnalitic from "./component/analitic/MainAnalitic"
+import MainPengunjung from "./component/pengunjung/MainPengunjung";
 import { getData } from "./component/sidebar/dataNavigation"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -23,7 +24,8 @@ function App() {
     "Users": <UsersMain />,
     "Tenggat Waktu": <MainTenggat />,
     "Data Loan" : <Loan />,
-    "Analitycs": <MainAnalitic />
+    "Analitycs": <MainAnalitic />,
+    "Pengunjung": <MainPengunjung /> 
   }
 
   return (

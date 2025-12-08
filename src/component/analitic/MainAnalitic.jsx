@@ -8,7 +8,7 @@ function MainAnalitic() {
   const [stats, setStats] = useState([
     { icon: "/personal.png", label: "Mahasiswa", value: 0 },
     { icon: "/book.png", label: "Peminjam", value: 0 },
-    { icon: "/pen.png", label: "Tunggakan", value: 0 },
+    { icon: "/pen.png", label: "Tanggungan", value: 0 },
     { icon: "/free.png", label: "Bebas Kompen", value: 0 },
   ]);
 
@@ -44,8 +44,8 @@ function MainAnalitic() {
         },
         {
           icon: "/pen.png",
-          label: "Tunggakan",
-          value: totalTunggakan,
+          label: "Tanggungan",
+          value: totalTanggungan,
         },
         {
           icon: "/free.png",
