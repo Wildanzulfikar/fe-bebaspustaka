@@ -90,8 +90,8 @@ export default function MainBebasPustaka() {
   );
 
   return (
-    <div className="flex flex-col bg-white shadow-md justify-between rounded-md mt-2 ml-2">
-      <div className="flex flex-col gap-4">
+    <div className="flex flex-col w-full shadow-md justify-between rounded-md mt-2 ml-2">
+      <div className="flex flex-col w-full gap-4">
         {/* Header & Search */}
         <div className="flex justify-between gap-2 px-4">
           <div className="flex items-center">
@@ -120,7 +120,7 @@ export default function MainBebasPustaka() {
         </div>
 
         {/* Filters */}
-        <div ref={wrapperRef} className="flex flex-wrap items-center gap-4 px-4 bg-white">
+        <div ref={wrapperRef} className="flex flex-wrap items-center gap-4 px-4">
           {/* Jurusan */}
           <div className="relative w-64">
             <button
@@ -172,8 +172,7 @@ export default function MainBebasPustaka() {
             {openStatusPinjaman && renderDropdown(statusPinjamanOptions, setStatusPinjaman, setOpenStatusPinjaman, "statusPinjaman")}
           </div>
         </div>
-
-        <div>
+        <div className="flex max-w-full">
           <ListBebasPustaka bebaspustakas={currentItems} />
         </div>
       </div>
