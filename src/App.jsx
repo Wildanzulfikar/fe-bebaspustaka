@@ -69,7 +69,7 @@ function App() {
           })}
 
           {/* Dynamic Keterangan page */}
-          <Route path="edit-keterangan/:id" element={<MainKeterangan />} />
+          <Route path="edit-keterangan/:member_id" element={<MainKeterangan />} />
         </Route>
       </Routes>
     </Router>

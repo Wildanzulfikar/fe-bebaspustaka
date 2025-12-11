@@ -49,16 +49,9 @@ function ListBebasPustaka({bebaspustakas}) {
                                     Belum
                                 </button>
                                 }</td>
-                            <td className="px-4 py-2  text-center">{(bebaspustaka.status_pinjaman === "Lunas" && bebaspustaka.status === "Bebas Pustaka") ? 
-                                (<button className="">
-                                    _
-                                </button>) :
-                                <button className="">
-                                    {bebaspustaka.keterangan}
-                                </button>
-                            }</td>
+                            <td className="px-4 py-2  text-center">{bebaspustaka.keterangan || "-"}</td>
                             <td className="flex justify-center items-center gap-3 px-4 py-2  text-center"> {bebaspustaka.status === "Bebas Pustaka" ?
-                                (<img src="/tenggat/delete.png" alt="delete"/> ) : (<button onClick={() => goToKeterangan(bebaspustaka.id_mahasiswa)}><img src="/bebaspustaka/edit.png" alt="update"/></button> )}
+                                (<img src="/tenggat/delete.png" alt="delete"/> ) : (<button onClick={() => goToKeterangan(bebaspustaka.nim)}><img src="/bebaspustaka/edit.png" alt="update"/></button> )}
                             </td>
                         </tr>
                     ))}
