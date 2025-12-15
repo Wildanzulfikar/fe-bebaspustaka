@@ -6,6 +6,7 @@ import UsersMain from "./component/Users/UsersMain"
 import MainTenggat from "./component/tenggat_waktu/MainTenggat"
 import MainLoan from "./component/loan/MainLoan"
 import MainBebasPustaka from "./component/bebas_pustaka/MainBebasPustaka"
+import { Toaster } from "react-hot-toast";
 import { getData } from "./component/sidebar/dataNavigation";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login, Register } from "./component/Auth";
@@ -29,6 +30,9 @@ function App() {
 
   return (
     <Router>
+
+      <Toaster position="top-right" reverseOrder={false} />
+
       <Routes>
         {/* Auth routes: render without sidebar/navbar */}
         <Route path="/login" element={<Login />} />

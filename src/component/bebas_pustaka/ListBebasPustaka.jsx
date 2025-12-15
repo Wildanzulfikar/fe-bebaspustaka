@@ -1,7 +1,7 @@
 function ListBebasPustaka({bebaspustakas}) {
 
     return (
-        <div className="flex bg-white h-full rounded-md mt-2 drop-shadow-xl">
+        <div className="flex h-full rounded-md">
             <table className="table-fixed h-full w-full">
                 <thead>
                     <tr className="bg-[#008797] text-white font-bold">
@@ -19,19 +19,31 @@ function ListBebasPustaka({bebaspustakas}) {
                 </thead>
                 <tbody>
                     {bebaspustakas.map((bebaspustaka, index) => (
-                        <tr key={bebaspustaka.id_mahasiswa ?? index} className="border-b-2 border-b-gray-200 hover:bg-gray-100">
+                        <tr key={bebaspustaka.id_mahasiswa ?? index} className="border-b-2 text-[10px] border-b-gray-200 hover:bg-gray-100">
                             <td className="px-4 py-2  text-center">{bebaspustaka.id_mahasiswa}</td>
                             <td className="px-4 py-2  text-center">{bebaspustaka.nim}</td>
                             <td className="px-4 py-2  text-center">{bebaspustaka.nama}</td>
                             <td className="px-4 py-2  text-center">{bebaspustaka.semester}</td>
                             <td className="px-4 py-2  text-center">{bebaspustaka.prodi}</td>
                             <td className="px-4 py-2  text-center">{bebaspustaka.kelas}</td>
-                            <td className="px-4 py-2  text-center">{bebaspustaka.status}</td>
-                            <td className="px-4 py-2  text-center">{bebaspustaka.status_pinjaman}</td>
+                            <td className="px-4 py-2  text-center text-[12px]">{bebaspustaka.status === "Bebas Pustaka" ? 
+                                (<button className="bg-[#7BE4AF] text-white px-2 gap-1 py-1 rounded flex items-center">
+                                    <img src="/bebaspustaka/success.png" alt="success"/> {bebaspustaka.status}
+                                </button>) : 
+                                (<button className="bg-blue-500 text-white px-3 py-1 rounded">
+                                    Tanggungan
+                                </button>)}</td>
+                            <td className="px-4 py-2  text-center">{bebaspustaka.status_pinjaman === "Lunas" ? 
+                                (<button className="bg-[#E5F4EC] text-[#318D5F] border border-gray-200 px-2 gap-1 py-1 rounded flex items-center">
+                                    {bebaspustaka.status_pinjaman}
+                                </button>) :
+                                <button className="bg-[#FFA4A4] text-red-500 border border-gray-200 px-2 gap-1 py-1 rounded flex items-center">
+                                    Belum
+                                </button>
+                                }</td>
                             <td className="px-4 py-2  text-center">{bebaspustaka.keterangan}</td>
-                            <td className="flex justify-center items-center gap-3 px-4 py-2  text-center">
-                                <img src="/tenggat/delete.png" alt="delete"/> |
-                                <img src="/tenggat/update.png" alt="update"/>
+                            <td className="flex justify-center items-center gap-3 px-4 py-2  text-center"> {bebaspustaka.status === "Bebas Pustaka" ?
+                                (<img src="/tenggat/delete.png" alt="delete"/> ) : (<img src="/tenggat/update.png" alt="update"/>)}
                             </td>
                         </tr>
                     ))}

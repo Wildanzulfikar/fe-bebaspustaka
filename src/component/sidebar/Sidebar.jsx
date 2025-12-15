@@ -6,7 +6,7 @@ function Sidebar() {
     const datas = getData()
 
     return (
-        <div className="bg-white h-full">
+        <div className="h-full">
             <div className="flex flex-col gap-2">
                 {datas.map((data) => (
                     <Navigation key={data.id}  {...data}/>
