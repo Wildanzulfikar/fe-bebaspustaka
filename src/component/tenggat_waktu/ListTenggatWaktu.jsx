@@ -4,7 +4,7 @@ function ListTenggatWaktu({tenggat, getTenggat}) {
 
     useEffect(() => {
         getTenggat();
-    }, [])
+    },)
 
     const handleDelete = async(id) => {
 

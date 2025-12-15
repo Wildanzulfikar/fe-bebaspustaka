@@ -4,7 +4,7 @@ function LoanList({loans, getLoan}) {
 
     useEffect(() => {
         getLoan()
-    }, [])
+    })
    
     return (
         <div className="flex ml-2 bg-white h-full rounded-md mt-2 drop-shadow-xl">

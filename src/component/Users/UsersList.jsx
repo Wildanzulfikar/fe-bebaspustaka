@@ -4,7 +4,7 @@ function UsersList({setIsOpenModal, users, getUsers}) {
 
   useEffect(() => {
     getUsers();
-  }, []);
+  });
 
   const handleDelete = async(id) => {
   
