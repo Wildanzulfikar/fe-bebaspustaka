@@ -19,8 +19,8 @@ function LoanList({ loans }) {
           </tr>
         </thead>
         <tbody>
-          {loans.map((loan) => (
-            <tr key={loan.id_mahasiswa ?? loan.nim} className="border-b-2 border-b-gray-200 hover:bg-gray-100 text-[10px]">
+          {loans.map((loan, index) => (
+            <tr key={index} className="border-b-2 border-b-gray-200 hover:bg-gray-100 text-[10px]">
               <td className="px-4 py-2 text-center">{loan.id_mahasiswa ?? '-'}</td>
               <td className="px-4 py-2 text-center">{loan.nim ?? '-'}</td>
               <td className="px-4 py-2 text-center">{loan.nama ?? '-'}</td>

@@ -17,7 +17,10 @@ import {
 } from "react-router-dom";
 import { Login, Register } from "./component/Auth";
 
-function Layout({ children }) {
+/* =======================
+   LAYOUT (React Router v6)
+   ======================= */
+function Layout() {
   const backgroundMain = {
     backgroundImage: "url('/background.png')",
     backgroundSize: "cover",
@@ -31,6 +34,7 @@ function Layout({ children }) {
         <Brand />
         <SidebarApp />
       </div>
+
       <div className="flex flex-col w-full">
         <Navbar />
         <div className="flex bg-white h-full w-full">
@@ -41,8 +45,12 @@ function Layout({ children }) {
   );
 }
 
+/* =======================
+   APP
+   ======================= */
 function App() {
   const datas = getData();
+
   const pagesMap = {
     Users: <UsersMain />,
     "Tenggat Waktu": <MainTenggat />,
@@ -53,23 +61,32 @@ function App() {
   return (
     <Router>
       <Toaster position="top-right" reverseOrder={false} />
+
       <Routes>
-        {/* Auth routes */}
+        {/* AUTH */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Layout route */}
+        {/* MAIN LAYOUT */}
         <Route path="/" element={<Layout />}>
-          {/* Static pages */}
+          {/* STATIC MENU ROUTES */}
           {datas.map((data) => {
             const path = data.teks.toLowerCase().replace(/ /g, "-");
+
             return (
-              <Route key={data.id} path={path} element={pagesMap[data.teks]} />
+              <Route
+                key={path} // ✅ AMAN, UNIK
+                path={path}
+                element={pagesMap[data.teks] ?? <div>Page not found</div>}
+              />
             );
           })}
 
-          {/* Dynamic Keterangan page */}
-          <Route path="edit-keterangan/:member_id" element={<MainKeterangan />} />
+          {/* DYNAMIC ROUTE */}
+          <Route
+            path="edit-keterangan/:member_id"
+            element={<MainKeterangan />}
+          />
         </Route>
       </Routes>
     </Router>
