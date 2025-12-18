@@ -77,25 +77,24 @@ function PieChartComponent() {
   };
 
   return (
-    <div className="flex flex-col w-full h-full bg-white rounded-lg shadow-md p-6">
-
-      {/* ======== TITLE FIXED ======== */}
-      <div className="flex justify-end pr-8 mb-4">
-        <h1 className="font-semibold text-xl text-gray-700">
-          Data Persenan Bebas Kompen
-        </h1>
+    <div className="flex flex-col w-full h-full bg-white rounded-xl shadow-md p-5">
+      {/* HEADER */}
+      <div className="flex items-center justify-between mb-2 px-2">
+        <div className="flex items-center gap-2">
+          <span className="inline-block w-2 h-6 bg-blue-500 rounded-full"></span>
+          <h2 className="font-bold text-base tracking-wide">Persentase Bebas Kompen</h2>
+        </div>
       </div>
 
-      {/* ======== PIE CHART ======== */}
-      <div className="h-[500px] w-full">
+      {/* PIE CHART */}
+      <div className="h-[420px] w-full flex items-center justify-center">
         <ResponsiveContainer>
           <PieChart>
-
             <Pie
               data={data}
               cx="40%"
               cy="50%"
-              outerRadius={130}
+              outerRadius={120}
               paddingAngle={0}
               dataKey="value"
               label={renderLabelInside}
@@ -105,14 +104,13 @@ function PieChartComponent() {
                 <Cell key={index} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-
-            <Tooltip />
-
+            <Tooltip wrapperClassName="!rounded-lg !shadow-md !border !border-gray-200 !bg-white" />
             <Legend
               layout="vertical"
               verticalAlign="middle"
               align="right"
-              wrapperStyle={{ paddingLeft: 20 }}
+              iconSize={12}
+              wrapperStyle={{ paddingLeft: 8, fontSize: 13, lineHeight: 1.2 }}
             />
           </PieChart>
         </ResponsiveContainer>

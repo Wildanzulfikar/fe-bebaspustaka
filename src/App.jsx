@@ -7,9 +7,10 @@ import MainTenggat from "./component/tenggat_waktu/MainTenggat";
 import MainLoan from "./component/loan/MainLoan";
 import MainBebasPustaka from "./component/bebas_pustaka/MainBebasPustaka";
 import MainKeterangan from "./component/Keterangan/MainKeterangan";
+import MainAnalitic from "./component/analitic/MainAnalitic"
+import MainPengunjung from "./component/pengunjung/MainPengunjung";
 import { Toaster } from "react-hot-toast";
 import Loan from "./component/loan/Loan"
-import MainAnalitic from "./component/analitic/MainAnalitic"
 import { getData } from "./component/sidebar/dataNavigation";
 import {
   BrowserRouter as Router,
@@ -35,7 +36,8 @@ function Layout() {
     "Users": <UsersMain />,
     "Tenggat Waktu": <MainTenggat />,
     "Data Loan" : <Loan />,
-    "Analitycs": <MainAnalitic />
+    "Analitycs": <MainAnalitic />,
+    "Pengunjung": <MainPengunjung /> 
   }
 
   return (
@@ -66,8 +68,8 @@ function App() {
     "Tenggat Waktu": <MainTenggat />,
     "Data Loan": <MainLoan />,
     "Bebas Pustaka": <MainBebasPustaka />,
-    Analitycs: <MainAnalitic />,
-    Analytics: <MainAnalitic />,
+    "Analitycs": <MainAnalitic />,
+    "Pengunjung": <MainPengunjung />,
   };
 
   return (

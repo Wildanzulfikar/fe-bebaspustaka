@@ -136,7 +136,7 @@ function MainAnalitic() {
 
                 {/* PIE CHART SCROLLABLE */}
                 <div className="flex w-full overflow-x-auto whitespace-nowrap scrollbar-thin">
-                  <div className="min-w-[720px] h-[350px] flex items-center">
+                  <div className="min-w-[720px] h-[420px] flex items-center">
                     <PieChart />
                   </div>
                 </div>

@@ -92,7 +92,6 @@ function ProdiAnalytics() {
 
   return (
     <div className="rounded-lg shadow-md bg-white h-full relative p-4 pt-8">
-
       {/* HEADER */}
       <h2
         className="font-bold text-sm px-4 py-2 inline-block shadow-sm absolute"
@@ -109,14 +108,12 @@ function ProdiAnalytics() {
       {/* CONTENT */}
       <div className="mt-4">
         {data.map((jurusan, jIndex) => (
-          <div key={jIndex} className="mb-3">
-            
+          <div key={jIndex} className="mb-4">
             {/* JURUSAN ROW */}
             <div
-              onClick={() =>
-                setOpenJurusan(openJurusan === jIndex ? null : jIndex)
-              }
-              className="flex justify-between items-center cursor-pointer text-gray-800 font-semibold text-sm hover:bg-gray-100 px-3 py-2 rounded"
+              onClick={() => setOpenJurusan(openJurusan === jIndex ? null : jIndex)}
+              className="flex justify-between items-center cursor-pointer text-gray-800 font-semibold text-sm hover:bg-gray-100 px-4 py-2 rounded-lg"
+              style={{ minHeight: 36 }}
             >
               <span>{jurusan.name}</span>
               <span>{openJurusan === jIndex ? "▾" : "▸"}</span>
@@ -124,20 +121,14 @@ function ProdiAnalytics() {
 
             {/* LIST PRODI */}
             {openJurusan === jIndex && (
-              <div className="ml-4 mt-2 space-y-2">
+              <div className="ml-4 mt-2 flex flex-col gap-2">
                 {jurusan.children.map((prodi, pIndex) => (
                   <div key={pIndex}>
-                    
                     {/* PRODI ROW */}
                     <div
-                      onClick={() =>
-                        setOpenProdi(
-                          openProdi === `${jIndex}-${pIndex}`
-                            ? null
-                            : `${jIndex}-${pIndex}`
-                        )
-                      }
-                      className="flex justify-between items-center cursor-pointer text-gray-700 font-medium text-sm px-2"
+                      onClick={() => setOpenProdi(openProdi === `${jIndex}-${pIndex}` ? null : `${jIndex}-${pIndex}`)}
+                      className="flex justify-between items-center cursor-pointer text-gray-700 font-medium text-sm px-3 py-1 rounded border border-gray-100 hover:bg-gray-50"
+                      style={{ minHeight: 30 }}
                     >
                       <span>{prodi.name}</span>
                       <span>{openProdi === `${jIndex}-${pIndex}` ? "▾" : "▸"}</span>
@@ -145,7 +136,7 @@ function ProdiAnalytics() {
 
                     {/* DETAIL PRODI (Mahasiswa, Bebas Pustaka, Tunggakan) */}
                     {openProdi === `${jIndex}-${pIndex}` && (
-                      <div className="ml-4 mt-1 text-xs text-gray-600 space-y-1">
+                      <div className="ml-5 mt-1 text-xs text-gray-600 bg-gray-50 border border-gray-100 rounded p-2 space-y-1">
                         <div className="flex justify-between">
                           <span>Mahasiswa</span>
                           <span>{prodi.mahasiswa}</span>
@@ -160,12 +151,10 @@ function ProdiAnalytics() {
                         </div>
                       </div>
                     )}
-
                   </div>
                 ))}
               </div>
             )}
-
           </div>
         ))}
       </div>

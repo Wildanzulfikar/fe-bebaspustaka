@@ -60,31 +60,36 @@ function BarChart() {
     ];
 
     return (
-        <div className="bg-white rounded-lg p-6">
-            <h2 className="font-bold text-lg mb-4">Bebas Kompen</h2>
+        <div className="bg-white rounded-xl shadow-md p-6 flex flex-col gap-2">
+            <div className="flex items-center gap-2 mb-2">
+                <span className="inline-block w-2 h-6 bg-blue-500 rounded-full"></span>
+                <h2 className="font-bold text-base tracking-wide">Bebas Kompen Per Jurusan</h2>
+            </div>
 
-            <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
-                <div className="min-w-[950px] h-[360px]">
+            <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                <div className="min-w-[900px] h-[340px] flex items-center">
                     <ResponsiveContainer width="100%" height="100%">
                         <ReBarChart data={data}>
-                            <CartesianGrid strokeDasharray="3 3" />
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
 
                             <XAxis 
                                 dataKey="jurusan" 
-                                tick={{ fontSize: 12 }}
+                                tick={{ fontSize: 12, fontWeight: 600, fill: '#2563eb' }}
                                 interval={0}
                             />
 
                             <YAxis 
                                 domain={[0, Math.max(3000, ...data.map(d => d.total))]}
                                 ticks={[0, 500, 1000, 1500, 2000, 2500]}
+                                tick={{ fontSize: 12, fontWeight: 500, fill: '#64748b' }}
                             />
 
-                            <Tooltip />
+                            <Tooltip wrapperClassName="!rounded-lg !shadow-md !border !border-gray-200 !bg-white" />
 
                             <Bar 
                                 dataKey="total" 
-                                radius={[6, 6, 0, 0]}
+                                radius={[8, 8, 0, 0]}
+                                barSize={36}
                             >
                                 {data.map((entry, index) => (
                                     <Cell 
@@ -101,4 +106,5 @@ function BarChart() {
         </div>
     );
 }
+
 export default BarChart;
