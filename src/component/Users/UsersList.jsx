@@ -1,28 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 
-const handleDelete = async(id) => {
-
-  if(!confirm("yakin anda mau hapus users ini?")) return;
-
-  await fetch(`http://127.0.0.1:3000/users/${id}`, {
-    method : "DELETE"
-  })
-
-  getUsers()
-}
-
-function UsersList({setIsOpenModal}) {
-  const [users, setUsers] = useState([]);
-
-  const getUsers = async () => {
-    const res = await fetch("http://127.0.0.1:3000/users");
-    const data = await res.json();
-    setUsers(data);
-  };
+function UsersList({setIsOpenModal, users, getUsers}) {
 
   useEffect(() => {
     getUsers();
   }, []);
+
+  const handleDelete = async(id) => {
+  
+    if(!confirm("yakin anda mau hapus users ini?")) return;
+  
+    await fetch(`http://127.0.0.1:3000/users/${id}`, {
+      method : "DELETE"
+    })
+  
+    getUsers()
+  }
 
   return (
     <div className="bg-white h-full ml-2 rounded-md mt-2 drop-shadow-xl">
@@ -52,10 +45,10 @@ function UsersList({setIsOpenModal}) {
                     <td className="px-4 py-2  text-center">{u.id_users}</td>
                     <td className="px-4 py-2  text-center">{u.name}</td>
                     <td className="px-4 py-2  text-center">{u.email}</td>
-                    <td className="px-4 py-2  text-center">{u.password}</td>
+                    <td className="px-4 py-2  text-center">{u.password.length > 8 ? u.password.slice(0,8) + "..." : u.password}</td>
                     <td className="px-4 py-2  text-center">{u.username}</td>
                     <td className="px-4 py-2  text-center">{u.role}</td>
-                    <td className="px-4 py-2  text-center">{u.status ? "admin" : "staff"}</td>
+                    <td className="px-4 py-2  text-center">{u.status ? "Active" : "Non Active"}</td>
                     <td className="flex px-4 py-2  justify-center">
                         <img onClick={() => handleDelete(u.id_users)} src="/users/trash.png" alt="delete" className="w-5 cursor-pointer" />
                     </td>

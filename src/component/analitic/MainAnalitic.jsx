@@ -5,6 +5,42 @@ import PieChart from "./PieChart";
 import ProdiAnalytics from "./ProdiAnalytics";
 
 function MainAnalitic() {
+    const [peminjamJurusan, setPeminjamJurusan] = useState([
+      { jurusan: "Teknik Sipil", total: 0 },
+      { jurusan: "Teknik Mesin", total: 0 },
+      { jurusan: "Teknik Elektro", total: 0 },
+      { jurusan: "Teknik Grafika dan Penerbitan", total: 0 },
+      { jurusan: "Teknik Informatika dan Komputer", total: 0 },
+      { jurusan: "Akuntansi", total: 0 },
+      { jurusan: "Administrasi Niaga", total: 0 },
+    ]);
+
+    useEffect(() => {
+      fetchPeminjamJurusan();
+    }, []);
+
+    const fetchPeminjamJurusan = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/peminjam-per-jurusan");
+        const apiData = await res.json();
+        const jurusanOrder = [
+          "Teknik Sipil",
+          "Teknik Mesin",
+          "Teknik Elektro",
+          "Teknik Grafika dan Penerbitan",
+          "Teknik Informatika dan Komputer",
+          "Akuntansi",
+          "Administrasi Niaga"
+        ];
+        const mapped = jurusanOrder.map(jurusan => {
+          const found = apiData.find(d => d.jurusan === jurusan);
+          return { jurusan, total: found ? found.total : 0 };
+        });
+        setPeminjamJurusan(mapped);
+      } catch (err) {
+        setPeminjamJurusan([]);
+      }
+    };
   const [stats, setStats] = useState([
     { icon: "/personal.png", label: "Mahasiswa", value: 0 },
     { icon: "/book.png", label: "Peminjam", value: 0 },
@@ -18,39 +54,29 @@ function MainAnalitic() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch(
-        "http://localhost:3000/api/mahasiswa-bebas-pustaka"
-      );
+      const res = await fetch("http://localhost:3000/api/dashboard-stats");
       const data = await res.json();
-
-      const totalMahasiswa = data.length;
-      const totalBebasKompen = data.filter(
-        (m) => m.status === "Bebas Pustaka"
-      ).length;
-
-      const totalPeminjam = 0;
-      const totalTunggakan = 0;
 
       setStats([
         {
           icon: "/personal.png",
           label: "Mahasiswa",
-          value: totalMahasiswa,
+          value: data.total_mahasiswa ?? 0,
         },
         {
           icon: "/book.png",
           label: "Peminjam",
-          value: totalPeminjam,
+          value: data.total_peminjam ?? 0,
         },
         {
           icon: "/pen.png",
           label: "Tunggakan",
-          value: totalTunggakan,
+          value: data.total_tunggakan ?? 0,
         },
         {
           icon: "/free.png",
           label: "Bebas Kompen",
-          value: totalBebasKompen,
+          value: data.total_bebas_pustaka ?? 0,
         },
       ]);
     } catch (error) {
@@ -89,49 +115,22 @@ function MainAnalitic() {
               {/* PEMINJAM + PIE CHART */}
               <div className="flex gap-4 h-full">
 
-                {/* PEMINJAM LIST */}
+                {/* PEMINJAM LIST DINAMIS */}
                 <div className="rounded-lg shadow-md h-full w-md bg-white overflow-hidden">
                   <div className="bg-purple-400 text-white text-center py-2 font-bold">
                     Peminjam
                   </div>
-
                   <div className="text-sm">
-                    <div className="flex justify-between bg-purple-100 p-4 text-gray-900">
-                      <span>Teknik Sipil</span>
-                      <span className="text-red-500 font-semibold">120</span>
-                    </div>
-
-                    <div className="flex justify-between p-4 text-gray-900">
-                      <span>Teknik Mesin</span>
-                      <span className="text-red-500 font-semibold">80</span>
-                    </div>
-
-                    <div className="flex justify-between bg-purple-100 p-4 text-gray-900">
-                      <span>Teknik Elektro</span>
-                      <span className="text-red-500 font-semibold">60</span>
-                    </div>
-
-                    <div className="flex justify-between p-4 text-gray-900">
-                      <span>Akuntansi</span>
-                      <span className="text-red-500 font-semibold">110</span>
-                    </div>
-
-                    <div className="flex justify-between bg-purple-100 p-4 text-gray-900">
-                      <span>Administrasi Niaga</span>
-                      <span className="text-red-500 font-semibold">70</span>
-                    </div>
-
-                    <div className="flex justify-between p-4 text-gray-900">
-                      <span>Teknik Grafika Penerbitan</span>
-                      <span className="text-red-500 font-semibold">95</span>
-                    </div>
-
-                    <div className="flex justify-between bg-purple-100 p-4 text-gray-900">
-                      <span>Teknik Informatika dan Komputer</span>
-                      <span className="text-red-500 font-semibold">150</span>
-                    </div>
+                    {peminjamJurusan.map((item, idx) => (
+                      <div
+                        key={item.jurusan}
+                        className={`flex justify-between p-4 text-gray-900 ${idx % 2 === 0 ? "bg-purple-100" : ""}`}
+                      >
+                        <span>{item.jurusan}</span>
+                        <span className="text-red-500 font-semibold">{item.total}</span>
+                      </div>
+                    ))}
                   </div>
-
                   <div className="bg-purple-400 py-2 rounded-b-lg"></div>
                 </div>
 

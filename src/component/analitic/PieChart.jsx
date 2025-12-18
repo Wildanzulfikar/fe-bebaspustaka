@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   PieChart,
   Pie,
@@ -9,15 +9,42 @@ import {
 } from "recharts";
 
 function PieChartComponent() {
-  const data = [
-    { name: "Teknik Sipil", value: 40 },
-    { name: "Teknik Mesin", value: 32 },
-    { name: "Teknik Elektro", value: 80 },
-    { name: "Akuntansi", value: 88 },
-    { name: "Administrasi Niaga", value: 54 },
-    { name: "Teknik Grafika Penerbitan (TGP)", value: 64 },
-    { name: "Teknik Informatika dan Komputer (TIK)", value: 40 },
-  ];
+  const [data, setData] = useState([
+    { name: "Teknik Sipil", value: 0 },
+    { name: "Teknik Mesin", value: 0 },
+    { name: "Teknik Elektro", value: 0 },
+    { name: "Akuntansi", value: 0 },
+    { name: "Administrasi Niaga", value: 0 },
+    { name: "Teknik Grafika dan Penerbitan", value: 0 },
+    { name: "Teknik Informatika dan Komputer", value: 0 },
+  ]);
+
+  useEffect(() => {
+    fetchPieChartData();
+  }, []);
+
+  const fetchPieChartData = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/bebas-pustaka-jurusan");
+      const apiData = await res.json();
+      const jurusanOrder = [
+        "Teknik Sipil",
+        "Teknik Mesin",
+        "Teknik Elektro",
+        "Teknik Grafika dan Penerbitan",
+        "Teknik Informatika dan Komputer",
+        "Akuntansi",
+        "Administrasi Niaga"
+      ];
+      const mapped = jurusanOrder.map(jurusan => {
+        const found = apiData.find(d => d.jurusan === jurusan);
+        return { name: jurusan, value: found ? found.total : 0 };
+      });
+      setData(mapped);
+    } catch (err) {
+      setData([]);
+    }
+  };
 
   const COLORS = [
     "#8884D8",
@@ -34,7 +61,6 @@ function PieChartComponent() {
     const radius = outerRadius * 0.65;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
     return (
       <text
         x={x}

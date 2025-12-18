@@ -12,7 +12,7 @@ function Navigation({image, teks}) {
             <li className={`flex gap-4 items-center w-full py-3 px-8 rounded-md ${
                 isActive ?"bg-[#CEE5FF] text-white" : "text-gray-700 hover:bg-gray-200"
             }`}>
-                <img className="w-9" src={image} alt="{teks}" />
+                <img className="w-6" src={image} alt="{teks}" />
                 <Link className="font-semibold text-gray-700" to={path}>{teks}</Link>
             </li>
         </ul>

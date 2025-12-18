@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function UsersForm({setIsOpenModal}) {
+function UsersForm({setIsOpenModal, getUsers}) {
 
     const [newUser, setNewUser] = useState({
         username : "",
@@ -12,11 +12,14 @@ function UsersForm({setIsOpenModal}) {
     });
 
     const handleSubmit = async(e) => {
+        e.preventDefault()
         await fetch("http://127.0.0.1:3000/users", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(newUser)
         })
+
+        getUsers()
 
         setIsOpenModal(false)
     }
@@ -57,7 +60,7 @@ function UsersForm({setIsOpenModal}) {
 
 
                      <div className="relative pt-2">
-                        <select onChange={(e) => setNewUser({...newUser, status: e.target.value})} className="block w-full border border-gray-400 py-1 px-3 rounded-md focus:border-indigo-400 focus:outline-none appearance-none pr-8 transition-colors duration-200">
+                        <select onChange={(e) => setNewUser({...newUser, status: e.target.value === "true"})} className="block w-full border border-gray-400 py-1 px-3 rounded-md focus:border-indigo-400 focus:outline-none appearance-none pr-8 transition-colors duration-200">
                             <option value="">Status</option>
                             <option value="true">Active</option>
                             <option value="false">Non Active</option>

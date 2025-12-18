@@ -2,7 +2,7 @@ import React from "react"
 
 function Brand() {
     return(
-        <div className="flex gap-4 p-2 mb-2 drop-shadow-md drop-shadow-gray-200 h-20 items-center bg-white rounded-md">
+        <div className="flex gap-4 py-2 justify-center mb-2 drop-shadow-md drop-shadow-gray-200 items-center bg-white rounded-md">
             <div>
                 <img src="/logo-pnj.png" alt="logo-pnj" />
             </div>
