@@ -10,6 +10,8 @@ import MainKeterangan from "./component/Keterangan/MainKeterangan";
 import LoanAktif from "./component/loan/LoanAktif";
 import LoanRiwayat from "./component/loan/LoanRiwayat";
 import { Toaster } from "react-hot-toast";
+import Loan from "./component/loan/Loan"
+import MainAnalitic from "./component/analitic/MainAnalitic"
 import { getData } from "./component/sidebar/dataNavigation";
 import {
   BrowserRouter as Router,
@@ -27,8 +29,8 @@ function Layout() {
     backgroundImage: "url('/background.png')",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    minHeight: "100vh",
-  };
+    minHeight: "100vh"
+  }
 
   return (
     <div className="flex p-12" style={backgroundMain}>
@@ -58,6 +60,8 @@ function App() {
     "Tenggat Waktu": <MainTenggat />,
     "Data Loan": <MainLoan />,
     "Bebas Pustaka": <MainBebasPustaka />,
+    Analitycs: <MainAnalitic />,
+    Analytics: <MainAnalitic />,
   };
 
   return (
@@ -77,7 +81,7 @@ function App() {
 
             return (
               <Route
-                key={path} // ✅ AMAN, UNIK
+                key={path}
                 path={path}
                 element={pagesMap[data.teks] ?? <div>Page not found</div>}
               />
