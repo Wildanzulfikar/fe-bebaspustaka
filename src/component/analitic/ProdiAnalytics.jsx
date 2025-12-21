@@ -1,94 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+const prodiToJurusan = [
+  { name: "Teknik Sipil", prodis: [
+    "Konstruksi Gedung (D3)", "Teknik Perancangan Jalan dan Jembatan (D4)", "Konstruksi Sipil (D3)", "Konstruksi Gedung (D4)"
+  ] },
+  { name: "Teknik Mesin", prodis: [
+    "Teknik Mesin (D3)", "Teknologi Rekayasa Manufaktur (D4)", "Teknologi Rekayasa Pembangkit Energi (D4)", "Teknologi Rekayasa Konversi Energi (D4)", "Teknologi Rekayasa Konversi Energi (D3/D4)", "Teknologi Rekayasa Pemeliharaan Alat Berat (D4)", "Teknologi Rekayasa Konversi Energi (D4)"
+  ] },
+  { name: "Teknik Elektro", prodis: [
+    "Teknik Listrik (D3)", "Teknik Otomasi Listrik Industri (D4)", "Elektronika Industri (D3)", "Broadband Multimedia (D4)", "Teknik Telekomunikasi (D3)", "Instrumentasi (D4)"
+  ] },
+  { name: "Akuntansi", prodis: [
+    "Akuntansi Keuangan (D3/D4)", "Keuangan dan Perbankan Syariah (D4)", "Keuangan dan Perbankan (D3)", "Keuangan dan Perbankan (D4)", "Akuntansi Keuangan (D4)", "Manajemen Keuangan (D4)", "Manajemen Pemasaran WNBK (D3)"
+  ] },
+  { name: "Administrasi Niaga", prodis: [
+    "BISPRO/MICE (D4)", "Administrasi Bisnis Terapan (D4)", "Administrasi Bisnis Terapan (D3)", "Bahasa Inggris untuk Komunikasi Bisnis (D4)"
+  ] },
+  { name: "Teknik Grafika Penerbitan", prodis: [
+    "Teknologi Industri Cetak Kemasan (D4)", "Desain Grafis (D4)", "Penerbitan (D3)"
+  ] },
+  { name: "Teknik Informatika dan Komputer", prodis: [
+    "Teknik Informatika (D4)", "Teknik Komputer dan Jaringan (D1)", "Teknik Multimedia Jaringan (D4)", "Teknik Multimedia Digital (D4)"
+  ] },
+];
 
 function ProdiAnalytics() {
-  // =============================
-  // DATA DUMMY (NANTI DIGANTIKAN BACKEND)
-  // =============================
-  const data = [
-    {
-      name: "Teknik Sipil",
-      children: [
-        { name: "Konstruksi Sipil", mahasiswa: 200, bebasPustaka: 180, tunggakan: 20 },
-        { name: "Konstruksi Gedung", mahasiswa: 190, bebasPustaka: 170, tunggakan: 20 },
-        { name: "Teknik Perancangan Jalan dan Jembatan", mahasiswa: 160, bebasPustaka: 140, tunggakan: 20 },
-        { name: "Teknik Konstruksi Gedung", mahasiswa: 175, bebasPustaka: 160, tunggakan: 15 },
-      ],
-    },
-
-    {
-      name: "Teknik Mesin",
-      children: [
-        { name: "Teknik Mesin", mahasiswa: 220, bebasPustaka: 200, tunggakan: 20 },
-        { name: "Teknik Konversi Energi", mahasiswa: 180, bebasPustaka: 165, tunggakan: 15 },
-        { name: "Alat Berat", mahasiswa: 140, bebasPustaka: 120, tunggakan: 20 },
-        { name: "Manufaktur", mahasiswa: 160, bebasPustaka: 145, tunggakan: 15 },
-        { name: "Pembangkit Tenaga Listrik", mahasiswa: 130, bebasPustaka: 118, tunggakan: 12 },
-        { name: "Teknologi Rekayasa Konversi Energi", mahasiswa: 150, bebasPustaka: 135, tunggakan: 15 },
-        { name: "Teknologi Rekayasa Pemeliharaan Alat Berat", mahasiswa: 120, bebasPustaka: 110, tunggakan: 10 },
-      ],
-    },
-
-    {
-      name: "Teknik Elektro",
-      children: [
-        { name: "Elektronika Industri", mahasiswa: 210, bebasPustaka: 195, tunggakan: 15 },
-        { name: "Teknik Listrik", mahasiswa: 190, bebasPustaka: 170, tunggakan: 20 },
-        { name: "Telekomunikasi", mahasiswa: 180, bebasPustaka: 160, tunggakan: 20 },
-        { name: "Instrumentasi Kontrol Industri", mahasiswa: 160, bebasPustaka: 145, tunggakan: 15 },
-        { name: "Teknik Otomasi Listrik Industri", mahasiswa: 170, bebasPustaka: 150, tunggakan: 20 },
-        { name: "Broadband Multimedia", mahasiswa: 150, bebasPustaka: 135, tunggakan: 15 },
-      ],
-    },
-
-    {
-      name: "Akuntansi",
-      children: [
-        { name: "Akuntansi", mahasiswa: 300, bebasPustaka: 270, tunggakan: 30 },
-        { name: "Keuangan dan Perbankan", mahasiswa: 260, bebasPustaka: 240, tunggakan: 20 },
-        { name: "Akuntansi Keuangan", mahasiswa: 230, bebasPustaka: 215, tunggakan: 15 },
-        { name: "Keuangan dan Perbankan Syariah", mahasiswa: 200, bebasPustaka: 185, tunggakan: 15 },
-        { name: "Manajemen Keuangan", mahasiswa: 220, bebasPustaka: 200, tunggakan: 20 },
-        { name: "Manajemen Pemasaran (WNBK)", mahasiswa: 180, bebasPustaka: 165, tunggakan: 15 },
-      ],
-    },
-
-    {
-      name: "Administrasi Niaga",
-      children: [
-        { name: "Administrasi Bisnis", mahasiswa: 280, bebasPustaka: 260, tunggakan: 20 },
-        { name: "Administrasi Bisnis Terapan", mahasiswa: 240, bebasPustaka: 220, tunggakan: 20 },
-        { name: "Usaha Jasa Konvensi, Perjalanan Insentif dan Pameran (MICE)", mahasiswa: 200, bebasPustaka: 185, tunggakan: 15,},
-        { name: "Bahasa Inggris untuk Komunikasi Bisnis dan Profesional", mahasiswa: 160, bebasPustaka: 145, tunggakan: 15},
-      ],
-    },
-
-    {
-      name: "Teknik Grafika Penerbitan",
-      children: [
-        { name: "Penerbitan", mahasiswa: 170, bebasPustaka: 160, tunggakan: 10 },
-        { name: "Teknik Grafika", mahasiswa: 150, bebasPustaka: 138, tunggakan: 12 },
-        { name: "Desain Grafis", mahasiswa: 190, bebasPustaka: 175, tunggakan: 15 },
-        { name: "Teknologi Industri Cetak Kemasan", mahasiswa: 130, bebasPustaka: 120, tunggakan: 10 },
-        { name: "Teknologi Rekayasa Cetak Dan Grafis 3 Dimensi", mahasiswa: 120, bebasPustaka: 110, tunggakan: 10 },
-      ],
-    },
-
-    {
-      name: "Teknik Informatika dan Komputer",
-      children: [
-        { name: "Teknik Informatika", mahasiswa: 1200, bebasPustaka: 1150, tunggakan: 50 },
-        { name: "Teknik Multimedia Digital", mahasiswa: 900, bebasPustaka: 870, tunggakan: 30 },
-        { name: "Teknik Multimedia dan Jaringan", mahasiswa: 600, bebasPustaka: 570, tunggakan: 30 },
-        { name: "Teknik Komputer dan Jaringan", mahasiswa: 500, bebasPustaka: 470, tunggakan: 30 },
-      ],
-    },
-  ];
-
-  // =============================
-  // STATE
-  // =============================
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [openJurusan, setOpenJurusan] = useState(null);
   const [openProdi, setOpenProdi] = useState(null);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch("http://localhost:3000/api/analytics/prodi")
+      .then((res) => {
+        if (!res.ok) throw new Error("Gagal fetch data");
+        return res.json();
+      })
+      .then((result) => {
+        // Map ke struktur jurusan-prodi
+        const prodiMap = {};
+        result.forEach((item) => {
+          prodiMap[item.prodi] = item;
+        });
+        const jurusanData = prodiToJurusan.map((jurusan) => ({
+          name: jurusan.name,
+          children: jurusan.prodis.map((prodiName) => ({
+            name: prodiName,
+            mahasiswa: prodiMap[prodiName]?.mahasiswa || 0,
+            bebasPustaka: prodiMap[prodiName]?.bebasPustaka || 0,
+            tunggakan: prodiMap[prodiName]?.tunggakan || 0,
+          })),
+        }));
+        setData(jurusanData);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <div className="p-4">Loading...</div>;
+  if (error) return <div className="p-4 text-red-500">{error}</div>;
 
   return (
     <div className="rounded-lg shadow-md bg-white h-full relative p-4 pt-8">

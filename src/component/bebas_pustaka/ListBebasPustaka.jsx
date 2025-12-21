@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
-function ListBebasPustaka({bebaspustakas}) {
+
+function ListBebasPustaka({ bebaspustakas }) {
 
     const navigate = useNavigate();
 

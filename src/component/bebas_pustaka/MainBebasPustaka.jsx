@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 import ListBebasPustaka from "./ListBebasPustaka";
 
 export default function MainBebasPustaka() {
@@ -18,6 +19,13 @@ export default function MainBebasPustaka() {
   const itemsPerPage = 10;
 
   const wrapperRef = useRef(null);
+  const tableRef = useRef(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => tableRef.current,
+    documentTitle: "Data Mahasiswa Bebas Pustaka",
+    contentRef: tableRef,
+  });
 
   useEffect(() => {
     const getBebasPustaka = async () => {
@@ -113,7 +121,12 @@ export default function MainBebasPustaka() {
             </div>
             <div className="flex items-end gap-2">
               <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 px-3 py-2 rounded-lg text-sm">🔄 Refresh</button>
-              <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 px-3 py-2 rounded-lg text-sm">⬇️ Export</button>
+              <button
+                className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 px-3 py-2 rounded-lg text-sm"
+                onClick={handlePrint}
+              >
+                ⬇️ Export PDF
+              </button>
               <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 px-3 py-2 rounded-lg text-sm">🖨️ Print</button>
             </div>
           </div>
@@ -172,7 +185,7 @@ export default function MainBebasPustaka() {
             {openStatusPinjaman && renderDropdown(statusPinjamanOptions, setStatusPinjaman, setOpenStatusPinjaman, "statusPinjaman")}
           </div>
         </div>
-        <div className="flex max-w-full">
+        <div className="flex max-w-full" ref={tableRef}>
           <ListBebasPustaka bebaspustakas={currentItems} />
         </div>
       </div>
