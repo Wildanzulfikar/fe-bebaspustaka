@@ -43,7 +43,7 @@ function ListBebasPustaka({bebaspustakas}) {
                                 </button>)}</td>
                             <td className="px-4 py-2 text-center">{bebaspustaka.status_pinjaman === "Lunas" ? 
                                 (<button className="bg-[#E5F4EC] text-[#318D5F] border border-gray-200 px-2 gap-1 py-1 rounded">
-                                    {bebaspustaka.status_pinjaman}
+                                    Lunas
                                 </button>) :
                                 <button className="bg-[#FFA4A4] text-red-500 border border-gray-200 px-2 gap-1 py-1 rounded">
                                     Belum

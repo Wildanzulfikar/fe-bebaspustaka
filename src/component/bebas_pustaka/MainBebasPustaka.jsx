@@ -53,9 +53,9 @@ export default function MainBebasPustaka() {
       temp = temp.filter(
         (item) => item.nama.toLowerCase().includes(search.toLowerCase()) || item.nim.toString().includes(search)
       );
-
-    setFiltered(temp);
-  }, [jurusan, statusPustaka, statusPinjaman, search, bebaspustakas]);
+      
+      setFiltered(temp);
+    }, [jurusan, statusPustaka, statusPinjaman, search, bebaspustakas]);
 
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
