@@ -10,8 +10,8 @@ import MainKeterangan from "./component/Keterangan/MainKeterangan";
 import LoanAktif from "./component/loan/LoanAktif";
 import LoanRiwayat from "./component/loan/LoanRiwayat";
 import { Toaster } from "react-hot-toast";
-import Loan from "./component/loan/Loan"
 import MainAnalitic from "./component/analitic/MainAnalitic"
+import Loan from "./component/loan/Loan"
 import { getData } from "./component/sidebar/dataNavigation";
 import {
   BrowserRouter as Router,
