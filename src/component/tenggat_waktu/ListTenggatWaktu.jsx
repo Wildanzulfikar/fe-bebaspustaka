@@ -1,4 +1,6 @@
-import { useEffect} from "react"
+import { useEffect } from "react"
+import { toast } from "react-hot-toast"
+import DataTable from "react-data-table-component"
 
 function ListTenggatWaktu({tenggat, getTenggat}) {
 
@@ -7,50 +9,85 @@ function ListTenggatWaktu({tenggat, getTenggat}) {
     }, [])
 
     const handleDelete = async(id) => {
-
         if(!confirm("yakin mau hapus?")) return;
-
-        await fetch(`http://127.0.0.1:3000/tenggat/${id}`, {
-            method: "DELETE"
-        })
-    
-        getTenggat()
+        try {
+            const res = await fetch(`http://127.0.0.1:3000/tenggat/${id}`, {
+                method: "DELETE"
+            });
+            if (res.ok) {
+                toast.success("Tenggat waktu berhasil dihapus!");
+                getTenggat();
+            } else {
+                toast.error("Gagal menghapus tenggat waktu!");
+            }
+        } catch (err) {
+            toast.error("Terjadi kesalahan jaringan!");
+        }
     }
     
 
+    const columns = [
+        { name: "ID", selector: row => row.id_tenggat_waktu ?? '-', sortable: true },
+        { name: "Username", selector: row => row.users_bebas_pustaka?.username ?? '-', sortable: true },
+        { name: "Nama Lengkap", selector: row => row.users_bebas_pustaka?.name ?? '-', sortable: true },
+        { name: "Email", selector: row => row.users_bebas_pustaka?.email ?? '-', sortable: true },
+        { name: "Waktu Mulai", selector: row => new Date(row.waktu_mulai).toLocaleString(), sortable: true },
+        { name: "Waktu Akhir", selector: row => new Date(row.waktu_akhir).toLocaleString(), sortable: true },
+        {
+            name: "Aksi",
+            cell: row => (
+                <div className="flex justify-center items-center gap-3">
+                    <img onClick={() => handleDelete(row.id_tenggat_waktu)} src="/tenggat/delete.png" alt="delete" style={{ cursor: 'pointer' }} />
+                </div>
+            ),
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+        },
+    ];
+
+    const customStyles = {
+        headCells: {
+            style: {
+                backgroundColor: '#008797',
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: '14px',
+                paddingLeft: '8px',
+                paddingRight: '8px',
+                textAlign: 'center',
+                minWidth: '80px',
+                maxWidth: '160px',
+                whiteSpace: 'nowrap',
+            },
+        },
+        cells: {
+            style: {
+                fontSize: '13px',
+                paddingLeft: '8px',
+                paddingRight: '8px',
+                textAlign: 'center',
+                minWidth: '80px',
+                maxWidth: '180px',
+                whiteSpace: 'nowrap',
+            },
+        },
+    };
+
     return (
-        <div className="flex bg-white h-full rounded-md mt-2 drop-shadow-xl">
-            <table className="table-fixed h-full w-full">
-                <thead>
-                    <tr className="bg-[#008797] text-white font-bold">
-                        <th className="w-1/12 px-4 py-2  text-center">ID</th>
-                        <th className="w-1/12 px-4 py-2  text-center">Username</th>
-                        <th className="w-1/12 px-4 py-2  text-center">Nama Lengkap</th>
-                        <th className="w-1/12 px-4 py-2  text-center">Email</th>
-                        <th className="w-1/12 px-4 py-2  text-center">Waktu Mulai</th>
-                        <th className="w-1/12 px-4 py-2  text-center">Waktu Akhir</th>
-                        <th className="w-1/12 px-4 py-2  text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tenggat.map((t) => (
-                        <tr key={t.id_tenggat_waktu} className="border-b-2 border-b-gray-200 hover:bg-gray-100">
-                            <td className="px-4 py-2  text-center">{t.id_tenggat_waktu}</td>
-                            <td className="px-4 py-2  text-center">{t.users_bebas_pustaka?.username}</td>
-                            <td className="px-4 py-2  text-center">{t.users_bebas_pustaka?.name}</td>
-                            <td className="px-4 py-2  text-center">{t.users_bebas_pustaka?.email}</td>
-                            <td className="px-4 py-2  text-center">{new Date(t.waktu_mulai).toLocaleString()}</td>
-                            <td className="px-4 py-2  text-center">{new Date(t.waktu_akhir).toLocaleString()}</td>
-                            <td className="flex justify-center items-center gap-3 px-4 py-2  text-center">
-                                <img onClick={() => handleDelete(t.id_tenggat_waktu)} src="/tenggat/delete.png" alt="delete"/> |
-                                <img src="/tenggat/update.png" alt="update"/>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <div className="bg-white h-full mt-2 w-full" style={{ overflowX: 'auto', minWidth: 1000 }}>
+            <DataTable
+                columns={columns}
+                data={tenggat}
+                pagination
+                highlightOnHover
+                striped
+                responsive={false}
+                persistTableHead
+                customStyles={customStyles}
+            />
         </div>
-    )   
+    )
 }
 
 export default ListTenggatWaktu

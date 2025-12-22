@@ -1,7 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-function Filtering({DataFiltering}) {
-  
+function Filtering({ onFilterChange }) {
+  const [jurusan, setJurusan] = useState("");
+  const [statusPustaka, setStatusPustaka] = useState("");
+  const [statusPinjaman, setStatusPinjaman] = useState("");
+  const [search, setSearch] = useState("");
+  const [tahun, setTahun] = useState("");
+
+  const handleChange = (field, value) => {
+    if (field === "jurusan") setJurusan(value);
+    if (field === "statusPustaka") setStatusPustaka(value);
+    if (field === "statusPinjaman") setStatusPinjaman(value);
+    if (field === "search") setSearch(value);
+
+    if (onFilterChange) {
+      onFilterChange({
+        jurusan: field === "jurusan" ? value : jurusan,
+        statusPustaka: field === "statusPustaka" ? value : statusPustaka,
+        statusPinjaman: field === "statusPinjaman" ? value : statusPinjaman,
+        search: field === "search" ? value : search,
+      });
+    }
+  };
 
   return (
     <div className="flex flex-wrap items-center gap-4">
@@ -9,13 +29,19 @@ function Filtering({DataFiltering}) {
       <div className="flex flex-col">
         <label className="text-xs text-gray-500 mb-1">Jurusan</label>
         <select
-          className="border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-[#008797] focus:border-[#008797]"
+          className="border border-gray-300 px-3 py-2 rounded-lg text-sm"
           value={jurusan}
-          onChange={(e) => setJurusan(e.target.value)}
+          onChange={(e) => handleChange("jurusan", e.target.value)}
         >
           <option value="">Semua</option>
-          <option value="Teknik Informatika">Teknik Informatika</option>
-          <option value="Sistem Informasi">Sistem Informasi</option>
+          <option value="01">01 - Teknik Sipil</option>
+          <option value="02">02 - Teknik Mesin</option>
+          <option value="03">03 - Teknik Elektro</option>
+          <option value="04">04 - Akuntansi</option>
+          <option value="05">05 - Administrasi Niaga</option>
+          <option value="06">06 - Teknik Grafika Penerbitan</option>
+          <option value="07">07 - Teknik Informatika dan Komputer</option>
+          <option value="08">08 - Jurusan Khusus</option>
         </select>
       </div>
 
@@ -23,12 +49,12 @@ function Filtering({DataFiltering}) {
       <div className="flex flex-col">
         <label className="text-xs text-gray-500 mb-1">Status Pustaka</label>
         <select
-          className="border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-[#008797] focus:border-[#008797]"
+          className="border border-gray-300 px-3 py-2 rounded-lg text-sm"
           value={statusPustaka}
-          onChange={(e) => setStatusPustaka(e.target.value)}
+          onChange={(e) => handleChange("statusPustaka", e.target.value)}
         >
           <option value="">Semua</option>
-          <option value="Bebas Kompen">Bebas Kompen</option>
+          <option value="Bebas Pustaka">Bebas Pustaka</option>
           <option value="Tanggungan">Tanggungan</option>
         </select>
       </div>
@@ -37,12 +63,12 @@ function Filtering({DataFiltering}) {
       <div className="flex flex-col">
         <label className="text-xs text-gray-500 mb-1">Status Pinjaman</label>
         <select
-          className="border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-[#008797] focus:border-[#008797]"
+          className="border border-gray-300 px-3 py-2 rounded-lg text-sm"
           value={statusPinjaman}
-          onChange={(e) => setStatusPinjaman(e.target.value)}
+          onChange={(e) => handleChange("statusPinjaman", e.target.value)}
         >
           <option value="">Semua</option>
-          <option value="Lulus">Lulus</option>
+          <option value="Lunas">Lunas</option>
           <option value="Belum">Belum</option>
         </select>
       </div>
@@ -50,47 +76,13 @@ function Filtering({DataFiltering}) {
       {/* Search */}
       <div className="flex flex-col">
         <label className="text-xs text-gray-500 mb-1">Search</label>
-        <div className="relative">
-          <input
-            type="text"
-            className="border border-gray-300 px-3 py-2 rounded-lg text-sm w-64 pl-9 focus:ring-2 focus:ring-[#008797] focus:border-[#008797]"
-            placeholder="Cari nama atau NIM..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <span className="absolute left-3 top-2.5 text-gray-400 text-sm">
-            🔍
-          </span>
-        </div>
-      </div>
-
-      {/* Tahun */}
-      <div className="flex flex-col">
-        <label className="text-xs text-gray-500 mb-1">Tahun</label>
-        <select
-          className="border border-gray-300 px-3 py-2 rounded-lg text-sm focus:ring-2 focus:ring-[#008797] focus:border-[#008797]"
-          value={tahun}
-          onChange={(e) => setTahun(e.target.value)}
-        >
-          <option value="2018">2018</option>
-          <option value="2019">2019</option>
-          <option value="2020">2020</option>
-        </select>
-      </div>
-
-      {/* Buttons */}
-      <div className="flex items-end gap-2 ml-auto">
-        <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 px-3 py-2 rounded-lg text-sm">
-          🔄 Refresh
-        </button>
-
-        <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 px-3 py-2 rounded-lg text-sm">
-          ⬇️ Export
-        </button>
-
-        <button className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 px-3 py-2 rounded-lg text-sm">
-          🖨️ Print
-        </button>
+        <input
+          type="text"
+          className="border border-gray-300 px-3 py-2 rounded-lg text-sm w-64"
+          placeholder="Cari nama atau NIM..."
+          value={search}
+          onChange={(e) => handleChange("search", e.target.value)}
+        />
       </div>
     </div>
   );

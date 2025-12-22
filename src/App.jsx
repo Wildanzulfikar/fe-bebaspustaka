@@ -7,6 +7,8 @@ import MainTenggat from "./component/tenggat_waktu/MainTenggat";
 import MainLoan from "./component/loan/MainLoan";
 import MainBebasPustaka from "./component/bebas_pustaka/MainBebasPustaka";
 import MainKeterangan from "./component/Keterangan/MainKeterangan";
+import LoanAktif from "./component/loan/LoanAktif";
+import LoanRiwayat from "./component/loan/LoanRiwayat";
 import MainAnalitic from "./component/analitic/MainAnalitic"
 import MainPengunjung from "./component/pengunjung/MainPengunjung";
 import { Toaster } from "react-hot-toast";
@@ -101,6 +103,15 @@ function App() {
             path="edit-keterangan/:member_id"
             element={<MainKeterangan />}
           />
+          <Route
+            path="/loan/:nim/riwayat"
+            element={<LoanRiwayat />}
+          />
+          <Route
+            path="/loan/:nim/aktif"
+            element={<LoanAktif />}
+          />
+
         </Route>
       </Routes>
     </Router>

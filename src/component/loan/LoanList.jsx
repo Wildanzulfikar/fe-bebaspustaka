@@ -1,56 +1,82 @@
+import { useNavigate } from "react-router-dom";
+import DataTable from "react-data-table-component";
+
 function LoanList({ loans }) {
+  const navigate = useNavigate();
+
+  const columns = [
+    { name: "ID", selector: row => row.id_mahasiswa ?? '-', sortable: true },
+    { name: "NIM", selector: row => row.nim ?? '-', sortable: true },
+    { name: "Nama", selector: row => row.nama ?? '-', sortable: true },
+    { name: "Prodi", selector: row => row.prodi ?? '-', sortable: true },
+    { name: "Kelas", selector: row => row.kelas ?? '-', sortable: true },
+    { name: "Semester", selector: row => row.semester ?? '-', sortable: true },
+    {
+      name: "Status",
+      selector: row => row.status,
+      sortable: true,
+      cell: row => row.status === "Lunas"
+        ? <button className="bg-[#E5F4EC] text-[#318D5F] border border-gray-200 px-2 gap-1 py-1 rounded">{row.status}</button>
+        : <button className="bg-[#FFA4A4] text-red-500 border border-gray-200 px-2 gap-1 py-1 rounded">Belum</button>
+    },
+    { name: "Pinjaman Aktif", selector: row => row.pinjaman_aktif ?? '-', sortable: true },
+    { name: "Total Pinjaman", selector: row => row.total_pinjaman ?? '-', sortable: true },
+    {
+      name: "Aksi",
+      cell: row => row.pinjaman_aktif > 0 ? (
+        <div className="flex gap-2">
+          <button onClick={() => navigate(`/loan/${row.nim}/aktif`)}>
+            <img src="/detail.png" alt="detail" />
+          </button>
+          |
+          <button onClick={() => navigate(`/loan/${row.nim}/riwayat`)}>
+            <img src="/history.png" alt="history" />
+          </button>
+        </div>
+      ) : null
+    }
+  ];
+
+  const customStyles = {
+    headCells: {
+      style: {
+        backgroundColor: '#008797',
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: '14px',
+        paddingLeft: '8px',
+        paddingRight: '8px',
+        textAlign: 'center',
+        minWidth: '80px',
+        maxWidth: '120px',
+        whiteSpace: 'nowrap',
+      },
+    },
+    cells: {
+      style: {
+        fontSize: '13px',
+        paddingLeft: '8px',
+        paddingRight: '8px',
+        textAlign: 'center',
+        minWidth: '80px',
+        maxWidth: '180px',
+        whiteSpace: 'nowrap',
+      },
+    },
+  };
+
   return (
-    <div className="w-full h-[500px] overflow-auto bg-white drop-shadow-xl">
-      <table className="min-w-full table-auto ">
-        <thead>
-          <tr className="bg-[#008797] text-white">
-            <th className="w-1/12 px-4 py-2 font-bold text-center">ID</th>
-            <th className="w-1/12 px-4 py-2 font-bold text-center">NIM</th>
-            <th className="w-1/12 px-4 py-2 font-bold text-center">Nama</th>
-            <th className="w-1/12 px-4 py-2 font-bold text-center">Prodi</th>
-            <th className="w-1/12 px-4 py-2 font-bold text-center">Kelas</th>
-            <th className="w-1/12 px-4 py-2 font-bold text-center">Semester</th>
-            <th className="w-1/12 px-4 py-2 font-bold text-center">Peminjaman</th>
-            <th className="w-1/12 px-4 py-2 font-bold text-center">Tenggat Waktu</th>
-            <th className="w-1/12 px-4 py-2 font-bold text-center">Pengembalian</th>
-            <th className="w-1/12 px-4 py-2 font-bold text-center">Keterlambatan</th>
-            <th className="w-1/12 px-4 py-2 font-bold text-center">Status</th>
-            <th className="w-1/12 px-4 py-2 font-bold text-center">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {loans.map((loan, index) => (
-            <tr key={index} className="border-b-2 border-b-gray-200 hover:bg-gray-100 text-[10px]">
-              <td className="px-4 py-2 text-center">{loan.id_mahasiswa ?? '-'}</td>
-              <td className="px-4 py-2 text-center">{loan.nim ?? '-'}</td>
-              <td className="px-4 py-2 text-center">{loan.nama ?? '-'}</td>
-              <td className="px-4 py-2 text-center">{loan.prodi ?? '-'}</td>
-              <td className="px-4 py-2 text-center">{loan.kelas ?? '-'}</td>
-              <td className="px-4 py-2 text-center">{loan.semester ?? '-'}</td>
-              <td className="px-4 py-2 text-center">{loan.peminjaman ?? '-'}</td>
-              <td className="px-4 py-2 text-center">{loan.tenggat_waktu ?? '-'}</td>
-              <td className="px-4 py-2 text-center">{loan.pengembalian ?? '-'}</td>
-              <td className="px-4 py-2 text-center">{loan.keterlambatan ?? '-'}</td>
-              <td className="px-4 py-2 text-center">{loan.status === "Lunas" ? 
-                (<button className="bg-[#E5F4EC] text-[#318D5F] border border-gray-200 px-2 gap-1 py-1 rounded"> 
-                    {loan.status}
-                </button>) :
-                (<button className="bg-[#FFA4A4] text-red-500 border border-gray-200 px-2 gap-1 py-1 rounded">
-                  Belum
-                </button>)}</td>
-              <td className="flex justify-center items-center gap-3 px-4 py-2 text-center"> {loan.status === "Lunas" ? 
-                (<button> 
-                    -
-                </button>) :
-                (<button>
-                  <img src="/detail.png" alt="detail" />
-                </button>)
-              }
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="w-full h-[500px] bg-white drop-shadow-xl" style={{ maxWidth: 1000, overflowX: 'auto' }}>
+      <DataTable
+        columns={columns}
+        data={loans}
+        pagination
+        highlightOnHover
+        striped
+        responsive={false}
+        persistTableHead
+        customStyles={customStyles}
+      />
     </div>
   );
 }
